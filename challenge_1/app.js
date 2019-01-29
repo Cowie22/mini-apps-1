@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   let xTurn = true;
-
+  let count = 1;
   document.addEventListener('click', (event) => {
+    count++
+    console.log(count)
     if (event.target.matches('.btn')) {
       window.location.reload();
     }
@@ -14,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
       event.target.value = 'Y';
       event.target.append('Y');
       xTurn = true;
+    }
+    if (count === 10) {
+      alert('Game Complete')
     }
   })
 });
