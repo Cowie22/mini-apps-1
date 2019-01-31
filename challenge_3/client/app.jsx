@@ -7,6 +7,16 @@ class App extends React.Component {
       name: '',
       mail: '',
       password: '',
+      line1: '',
+      line2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      PhoneNum: '',
+      Card: '',
+      ExpDate: '',
+      Cvv: '',
+      Billing: ''
     };
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,27 +31,30 @@ class App extends React.Component {
     this.setState(newState);
   }
   handleReset() {
-    this.setState({checkout: this.state.checkout === 0})
+    this.setState({checkout: this.state.checkout = 0})
   }
   render() {
-    const checked = this.state.checkout;
-    const account = this.state.accountStatus;
+    const { checkout, name, mail, password, line1, line2, city,
+    state, zipcode, PhoneNum, Card, ExpDate, Cvv, Billing } = this.state;
     return (
       <div>
-        {checked === 0 ? (
+        {checkout === 0 ? (
         <HomePage onClick={this.handleCheckoutClick} />
         ):
-        checked === 1 ? (
+        checkout === 1 ? (
         <Form1 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        checked === 2 ? (
+        checkout === 2 ? (
         <Form2 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        checked === 3 ? (
+        checkout === 3 ? (
         <Form3 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        checked === 4 ? (
-        <Confirmation onChange={this.handleInputChange} onClick={this.handleReset} />
+        checkout === 4 ? (
+        <Confirmation onChange={this.handleInputChange} onClick={this.handleReset}
+        name={name} mail={mail} password={password} line1={line1} line2={line2}
+        city={city} state={state} zipcode={zipcode} PhoneNum={PhoneNum} Card={Card}
+        ExpDate={ExpDate} Cvv={Cvv} Billing={Billing} />
         ):
         <HomePage onClick={this.handleCheckoutClick} />
         }
@@ -98,7 +111,7 @@ var Form2 = (props) => (
     </label>
     <label>
       Phone#:
-      <input type="text" name="Phone#" placeholder="Insert Phone#" onChange={props.onChange} />
+      <input type="text" name="PhoneNum" placeholder="Insert Phone#" onChange={props.onChange} />
     </label>
     <input type="submit" value="To Billing" onClick={props.onClick} />
   </form>
@@ -130,29 +143,36 @@ var Form3 = (props) => (
 var Confirmation = (props) => (
   <div>
     <h3>Confirmation</h3>
+    Name:
+    <div>{props.name}</div>
+    Mail:
+    <div>{props.mail}</div>
+    Password:
+    <div>{props.password}</div>
+    Address:
+    Line1:
+    <div>{props.line1}</div>
+    Line2:
+    <div>{props.line2}</div>
+    City:
+    <div>{props.city}</div>
+    State:
+    <div>{props.state}</div>
+    Zipcode:
+    <div>{props.zipcode}</div>
+    Phone Number:
+    <div>{props.PhoneNum}</div>
+    Card:
+    <div>{props.Card}</div>
+    Expiration Date:
+    <div>{props.ExpDate}</div>
+    Cvv:
+    <div>{props.Cvv}</div>
+    Billing:
+    <div>{props.Billing}</div>
     <input type="submit" value="PURCHASE" onClick={props.onClick} />
   </div>
 )
 
 ReactDOM.render(<App />, document.getElementById('app'));
-//export default App
 
-// var Form1 = function() {
-//      return(
-//      <div>
-//         Create Account Please
-//         <form>
-//           <label>
-//             <input type="text" placeholder="Insert Name" value={this.state.name} />
-//           </label>
-//           <label>
-//             <input type="text" placeholder="Insert Email" value={this.state.mail} />
-//           </label>
-//           <label>
-//             <input type="text" placeholder="Insert Password" value={this.state.password} />
-//           </label>
-//           <input type="submit" value="NEXT" />
-//         </form>
-//       </div>
-//      )
-// }
