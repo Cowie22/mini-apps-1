@@ -3,45 +3,47 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkout: false,
+      checkout: 0,
       name: '',
       mail: '',
       password: '',
-      accountStatus: false
     };
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleAccountSubmit = this.handleAccountSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
   handleCheckoutClick() {
-    this.setState({checkout: !this.state.checkout});
-  }
-  handleAccountSubmit() {
-    this.setState({accountStatus: !this.state.accountStatus})
+    this.setState({checkout: this.state.checkout + 1});
   }
   handleInputChange(event) {
     const newState = {};
     newState[event.target.name] = event.target.value;
     this.setState(newState);
   }
+  handleReset() {
+    this.setState({checkout: this.state.checkout === 0})
+  }
   render() {
     const checked = this.state.checkout;
     const account = this.state.accountStatus;
     return (
       <div>
-        {!checked ? (
+        {checked === 0 ? (
         <HomePage onClick={this.handleCheckoutClick} />
         ):
-        checked ? (
-        <Form1 onChange={this.handleInputChange} onClick={this.handleAccountSubmit} />
+        checked === 1 ? (
+        <Form1 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        account ? (
-        <Form2 />
+        checked === 2 ? (
+        <Form2 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        account ? (
-        <Form3 />
+        checked === 3 ? (
+        <Form3 onChange={this.handleInputChange} onClick={this.handleCheckoutClick} />
         ):
-        <Confirmation />
+        checked === 4 ? (
+        <Confirmation onChange={this.handleInputChange} onClick={this.handleReset} />
+        ):
+        <HomePage onClick={this.handleCheckoutClick} />
         }
       </div>
     )
@@ -79,26 +81,26 @@ var Form2 = (props) => (
     <h3>Shipping Info</h3>
     <label>
       Address:
-      <input type="text" name="line1" placeholder="Line 1" />
-      <input type="text" name="line2" placeholder="Line 2" />
+      <input type="text" name="line1" placeholder="Line 1" onChange={props.onChange} />
+      <input type="text" name="line2" placeholder="Line 2" onChange={props.onChange} />
     </label>
     <label>
       City:
-      <input type="text" name="city" placeholder="Insert City" />
+      <input type="text" name="city" placeholder="Insert City" onChange={props.onChange} />
     </label>
     <label>
       State:
-      <input type="text" name="state" placeholder="Insert State" />
+      <input type="text" name="state" placeholder="Insert State" onChange={props.onChange} />
     </label>
     <label>
       Zipcode:
-      <input type="text" name="zipcode" placeholder="Insert Zipcode" />
+      <input type="text" name="zipcode" placeholder="Insert Zipcode" onChange={props.onChange} />
     </label>
     <label>
       Phone#:
-      <input type="text" name="Phone#" placeholder="Insert Phone#" />
+      <input type="text" name="Phone#" placeholder="Insert Phone#" onChange={props.onChange} />
     </label>
-    <input type="submit" value="To Billing" />
+    <input type="submit" value="To Billing" onClick={props.onClick} />
   </form>
 )
 
@@ -107,28 +109,28 @@ var Form3 = (props) => (
     <h3>Billing Info</h3>
     <label>
       Credit Card:
-      <input type="text" name="Card" placeholder="Insert Card" />
+      <input type="text" name="Card" placeholder="Insert Card" onChange={props.onChange} />
     </label>
     <label>
       Exp Date:
-      <input type="text" name="Exp Date" placeholder="Insert Exp Date" />
+      <input type="text" name="ExpDate" placeholder="Insert Exp Date" onChange={props.onChange} />
     </label>
     <label>
       Cvv:
-      <input type="text" name="Cvv" placeholder="Insert Cvv" />
+      <input type="text" name="Cvv" placeholder="Insert Cvv" onChange={props.onChange} />
     </label>
     <label>
       Billing Zip Code:
-      <input type="text" name="Billing" placeholder="Insert Billing Zip Code" />
+      <input type="text" name="Billing" placeholder="Insert Billing Zip Code" onChange={props.onChange} />
     </label>
-    <input type="submit" value="To Confirmation" />
+    <input type="submit" value="To Confirmation" onClick={props.onClick} />
   </form>
 )
 
 var Confirmation = (props) => (
   <div>
     <h3>Confirmation</h3>
-    <input type="submit" value="PURCHASE" />
+    <input type="submit" value="PURCHASE" onClick={props.onClick} />
   </div>
 )
 
