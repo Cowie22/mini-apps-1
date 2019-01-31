@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('./db.js');
+const { getAllUsers, addUser } = require('./db.js');
 
 const app = express();
 const PORT = 6969;
@@ -10,15 +10,28 @@ const PORT = 6969;
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 
+app.get('/user', (req, res) => {
+  console.log('getting users');
+  getAllUsers((err, rows) => {
+    if (err) {
+      res.status(400).send();
+      return;
+    }
+    res.status(200).send(rows);
+  })
+})
+
 app.post('/user', (req, res,) => {
-  db.addUser(req.body, (err) => {
+  console.log('posting users');
+  addUser(req.body, (err) => {
     if (err) {
       res.status(400).send()
       return;
     }
-    res.status(200).send();
+    res.status(201);
   })
 })
+
 
 
 app.listen(PORT, () => {
