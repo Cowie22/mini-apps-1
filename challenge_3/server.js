@@ -10,7 +10,7 @@ const PORT = 6969;
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 
-app.get('/user', (req, res) => {
+app.get('/users', (req, res) => {
   console.log('getting users');
   getAllUsers((err, rows) => {
     if (err) {
@@ -21,17 +21,16 @@ app.get('/user', (req, res) => {
   })
 })
 
-app.post('/user', (req, res,) => {
+app.post('/users', (req, res,) => {
   console.log('posting users');
   addUser(req.body, (err) => {
     if (err) {
       res.status(400).send()
       return;
     }
-    res.status(201);
+    res.status(201).send();
   })
 })
-
 
 
 app.listen(PORT, () => {
