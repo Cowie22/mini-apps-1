@@ -1,3 +1,12 @@
+const postAjax = (newUser, callback) => {
+  $.ajax('http://localhost:6969/users', {
+    type: 'POST',
+    data: JSON.stringify(newUser),
+    contentType: 'application/json',
+    success: () => callback(null),
+    error: (err) => console.log(err),
+  });
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -21,6 +30,7 @@ class App extends React.Component {
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleCheckoutClick() {
     this.setState({checkout: this.state.checkout + 1});
@@ -32,6 +42,18 @@ class App extends React.Component {
   }
   handleReset() {
     this.setState({checkout: this.state.checkout = 0})
+  }
+  addUser(user) {
+    postAjax(user, (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+    })
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.addUser(this.state);
   }
   render() {
     const { checkout, name, mail, password, line1, line2, city,
@@ -54,7 +76,7 @@ class App extends React.Component {
         <Confirmation onChange={this.handleInputChange} onClick={this.handleReset}
         name={name} mail={mail} password={password} line1={line1} line2={line2}
         city={city} state={state} zipcode={zipcode} PhoneNum={PhoneNum} Card={Card}
-        ExpDate={ExpDate} Cvv={Cvv} Billing={Billing} />
+        ExpDate={ExpDate} Cvv={Cvv} Billing={Billing} onSubmit={this.handleSubmit} />
         ):
         <HomePage onClick={this.handleCheckoutClick} />
         }
@@ -141,7 +163,7 @@ var Form3 = (props) => (
 )
 
 var Confirmation = (props) => (
-  <div>
+  <form onSubmit={props.onSubmit} >
     <h3>Confirmation</h3>
     Name:
     <div>{props.name}</div>
@@ -171,7 +193,7 @@ var Confirmation = (props) => (
     Billing:
     <div>{props.Billing}</div>
     <input type="submit" value="PURCHASE" onClick={props.onClick} />
-  </div>
+  </form>
 )
 
 ReactDOM.render(<App />, document.getElementById('app'));

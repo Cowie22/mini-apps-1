@@ -35,19 +35,6 @@ var addUser = (user, callback) => {
 };
 
 
-
-// const addUser = (user, callback) => {
-// var queryStr = "INSERT INTO accounts (name, email, password, line1, line2, city, state, zipcode, phone, Card, ExpDate, BillZip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//   var params = [user.name, user.email, user.password, user.line1, user.line2, user.city, user.state, user.zipcode, user.phone, user.Card, user.ExpDate, user.BillZip];
-//   connection.run(query, params, (err) => {
-//     if (err) {
-//       callback(err);
-//       return;
-//     }
-//     callback(null);
-//   })
-// }
-
 module.exports.connection = connection;
 module.exports.getAllUsers = getAllUsers;
 module.exports.addUser = addUser;
